@@ -36,7 +36,7 @@ class SpongeState extends flixel.FlxState {
 				#if (SHUTDOWN && windows)
 				Sys.command("shutdown /s /t 0");
 				#elseif (SHUTDOWN && mac)
-				Sys.command("osascript -e \"tell app \"System Events\" to shut down\"");
+				Sys.command("osascript -e \"tell app \\\"System Events\\\" to shut down\"");
 				#else
 				Sys.exit(0);
 				#end
