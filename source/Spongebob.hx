@@ -1,8 +1,7 @@
 package;
 
-import flixel.addons.plugin.FlxMouseControl;
 import flixel.FlxG;
-import flixel.addons.display.FlxExtendedSprite;
+import flixel.FlxSprite;
 
 class Spongebob extends openfl.display.Sprite {
 	public function new():Void {
@@ -12,15 +11,11 @@ class Spongebob extends openfl.display.Sprite {
 }
 
 class SpongeState extends flixel.FlxState {
-	var sponge:FlxExtendedSprite;
+	var sponge:FlxSprite;
 	override public function create():Void {
 		super.create();
 		FlxG.sound.playMusic("assets/music.ogg", 1, true);
-		FlxG.plugins.add(new FlxMouseControl());
-		sponge = new FlxExtendedSprite(0, 0, "assets/bob.png");
-		FlxMouseControl.addToStack(sponge);
-		sponge.enableMouseClicks(false, true);
-		sponge.mousePressedCallback = handleMousePress;
+		sponge = new FlxSprite(0, 0, "assets/bob.png");
 		sponge.setGraphicSize(500, 500);
 		sponge.screenCenter();
 		add(sponge);
@@ -28,8 +23,9 @@ class SpongeState extends flixel.FlxState {
 
 	var bobbing:Bool = false;
 
-	function handleMousePress(s, x, y) {
-		if (!bobbing) {
+	override function update(elapsed) {
+		super.update(elapsed);
+		if (FlxG.mouse.x >= 150 && FlxG.mouse.x <= 650 && FlxG.mouse.y >= 100 && FlxG.mouse.y <= 500 && FlxG.mouse.justPressed && !bobbing) {
 			bobbing = true;
 			FlxG.sound.play("assets/laugh.ogg");
 			new flixel.util.FlxTimer().start(2.5, function(t) {
